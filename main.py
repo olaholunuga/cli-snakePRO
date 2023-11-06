@@ -46,6 +46,46 @@ class Screen():
         food = (int(sh / 2), int(sw / 2))
         self.power(d, snk, sh, sw, food)
 
+    def power(self, d, snk, sh, sw, food):
+        while True:
+            key = self.gameWindow.getch()
+            if key == ord("c"):
+                #self.gameWindow.addch(food[0], food[1], "O")
+                while True:
+                    nhead = None
+                    if snk[0][0] in (0, sh) or snk[0][1] in (0, sw) or snk[0] in snk[1:]:
+                        # We crashed
+                        curses.endwin()
+                        print("GAME OVER")
+                        quit()
+                    key = self.gameWindow.getch()
+                    if key == ord("d"):
+                        curses.endwin()
+                        print("GAME OVER")
+                        quit()
+                    food, det = self.shake(snk, sh, sw, food)
+                    if key == -1:
+                        d = d
+                    else:
+                        d = key
+                    oldhead = snk[0]
+                    if d == curses.KEY_RIGHT or d == 454:
+                        nhead = (oldhead[0], oldhead[1] + 1)
+                    if d == curses.KEY_LEFT or d == 452:
+                        nhead = (oldhead[0], oldhead[1] - 1)
+                    if d == curses.KEY_UP or d == 450:
+                        nhead = (oldhead[0] - 1, oldhead[1])
+                    if d == curses.KEY_DOWN or d == 456:
+                        nhead = (oldhead[0] + 1, oldhead[1])
+                    self.gameSnake.insert(0, nhead)
+                    if det == 1:
+                        snakeTail = self.gameSnake.pop()
+                        tail_y, tail_x = snakeTail
+                        self.render(sw, food, det, tail_y, tail_x)
+                    else:
+                        tail_y, tail_x = 0, 0
+                        self.render(sw, food, det, tail_y, tail_x)
+
 if __name__ == "__main__":
     try:
         window = Screen()

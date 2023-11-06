@@ -86,6 +86,17 @@ class Screen():
                         tail_y, tail_x = 0, 0
                         self.render(sw, food, det, tail_y, tail_x)
 
+    def render(self, sw, food, det, tail_y=0, tail_x=0):
+        if det == -1:
+            self.gameWindow.addch(tail_y, tail_x, " ")
+        self.gameWindow.clear()
+        self.gameWindow.border()
+        self.gameWindow.addch(food[0], food[1], "x")
+        self.gameWindow.addstr(0, round(sw * 0.8), F"SCORE: {self.score}")
+        for x in self.gameSnake:
+            self.gameWindow.addch(x[0], x[1], curses.ACS_BLOCK)
+        self.gameWindow.refresh()
+
 if __name__ == "__main__":
     try:
         window = Screen()

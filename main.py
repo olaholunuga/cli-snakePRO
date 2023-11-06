@@ -112,6 +112,14 @@ class Screen():
             det = 1
         return food, det
 
+    def closewin(self):
+        """close the window
+        """
+        curses.nocbreak()
+        self.screen.keypad(False)
+        curses.echo()
+        curses.endwin()
+
 if __name__ == "__main__":
     try:
         window = Screen()

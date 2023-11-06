@@ -15,6 +15,16 @@ class Screen():
         self.gameSnake = self.snakeBody
         self.score = 0
 
+    def main(self):
+        """initialization
+        """
+        self.screen = curses.initscr()
+        curses.cbreak
+        curses.noecho
+        self.screen.border()
+        self.screen.nodelay(True)
+        self.screen.keypad(True)
+        curses.curs_set(0)
 
 if __name__ == "__main__":
     try:

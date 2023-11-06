@@ -96,6 +96,21 @@ class Screen():
         for x in self.gameSnake:
             self.gameWindow.addch(x[0], x[1], curses.ACS_BLOCK)
         self.gameWindow.refresh()
+        
+    def shake(self, snk, sh, sw, food):
+        if snk[0] == food:
+            food = None
+            self.score += 1
+            while food is None:
+                new_food = (random.randint(1, sh - 1), random.randint(1, sw - 1))
+                if new_food in snk:
+                    new_food = None
+                else:
+                    food = new_food
+            det = -1
+        else:
+            det = 1
+        return food, det
 
 if __name__ == "__main__":
     try:
